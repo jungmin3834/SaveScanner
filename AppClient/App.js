@@ -12,9 +12,10 @@ const instructions = Platform.select({
 export default function App() {
   return (
     <View style={styles.container}>
+            <Text style={styles.welcome}>Save Scanner</Text>
       <Text style={styles.welcome}>Save Scanner</Text>
       <Text style={styles.instructions}>Share QR Code for us!</Text>
-      <QRCode content='https://reactnative.com'/>
+      <QRCode content='sadsadsatnative.com'/>
     </View>
   );
 }
