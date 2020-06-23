@@ -10,7 +10,7 @@ const instructions = Platform.select({
   android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
 });*/
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   constructor(){
     super();
     this.state = { data: "" };
@@ -25,23 +25,43 @@ export default class Home extends React.Component {
     } catch (error) {
     }
   };
+  
+  updateData = (dataString) =>{
+    this.setState({data: dataString})
+  }
+
+  moveToRegisterScreen = () => {
+    this.props.navigation.navigate('RegisterScreen', {
+      updateData: this.updateData,
+      data : this.state.data
+    });
+  }
 
   render(){
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Save Scanner</Text>
         <Text style={styles.instructions}>Share QR Code for us!</Text>
-        { this.state.data != "" ? <QRCode content={this.state.data}/> : 
-        <View style={styles.qrBox}>
-             <TouchableOpacity style={{marginTop:'auto',marginBottom:'auto'}} onPress={this._onPressButton}> 
+        { 
+        this.state.data != "" ? 
+        <TouchableOpacity onPress={() =>{ this.moveToRegisterScreen(); }}> 
+          <QRCode content={this.state.data} />
+        </TouchableOpacity> : 
+        <TouchableOpacity style={styles.qrBox} onPress={() =>{ this.moveToRegisterScreen(); }}> 
+        <View style={{marginTop:'auto',marginBottom:'auto'}}>
               <Text style={styles.qrText}>
                 Create New QR Code
               </Text>
-            </TouchableOpacity >
-        </View> }
+        </View> 
+        </TouchableOpacity >
+        }
       </View>
     );
   }
+}
+
+export default function HomeScreen({ navigation }) {
+  return <Home navigation={navigation} ></Home>
 }
 
 const styles = StyleSheet.create({

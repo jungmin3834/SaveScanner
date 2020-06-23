@@ -5,28 +5,59 @@ import {Keyboard,Text,Button, View, TextInput, TouchableOpacity,TouchableWithout
 
 const appId = "1047121222092614"
 
+
+
 export default class RegisterScreen extends Component {
+  constructor({route, navigation }){
+    super();
+    const { updateData } = route.params;
+    const { data } = route.params;
+
+    this.state = {update : updateData , phone :"",email: "", name :""};
+    if(data != ""){
+      alert(data);
+      let parseData = JSON.parse(data + "}");
+    }
+
+
+  }
+
+  updateData(){
+    if(this.state.name === "")
+      alert("이름을 입력해주세요");
+    else if(this.state.email === "")
+      alert("이메일을 입력해주세요");
+    else if(this.state.phone === "")
+      alert("폰번호를 입력해주세요");
+    else{
+      let str = '{"name":' + '"' + this.state.name + '"' + ',"email":'+  '"' +this.state.email +  '"' +',"phone":' + '"' + this.state.phone +'"';
+      this.state.update(str);
+      this.props.navigation.goBack();
+    }
+  }
 
   render() {
     return (
       <KeyboardAvoidingView style={styles.containerView} behavior="padding">
-
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.loginScreenContainer}>
           <View style={styles.loginFormView}>
           <Text style={styles.logoText}>Register</Text>
             <Text style={styles.labelText}>Name</Text>
-            <TextInput placeholder="Username" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
+            <TextInput placeholder="Username"  onChangeText={(text) => this.setState({name:text})} value={this.state.name} 
+            placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
             <Text style={styles.labelText}>Email</Text>
-            <TextInput placeholder="Email" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
+            <TextInput placeholder="Email" onChangeText={(text )=>{this.setState({email:text })}} value={this.state.email} 
+            placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
             <Text style={styles.labelText}>Phone</Text>
-            <TextInput placeholder="Phone" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
-            <TouchableOpacity style={{marginTop:'5%'}} onPress={this._onPressButton}> 
+            <TextInput placeholder="Phone"  onChangeText={(text )=>{this.setState({phone:text })}} value={this.state.phone}  
+            placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
+            <TouchableOpacity style={{marginTop:'5%'}} onPress={() =>{this.updateData()}}> 
               <Text style = {styles.loginButton}>
                 Register
               </Text>
             </TouchableOpacity >
-            <TouchableOpacity onPress={this._onPressButton}> 
+            <TouchableOpacity onPress={() =>{this.props.navigation.goBack()}}> 
               <Text style = {styles.loginButton}>
                 Go Back
               </Text>
@@ -36,29 +67,5 @@ export default class RegisterScreen extends Component {
       </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     );
-  }
-
-  componentDidMount() {
-  }
-
-  componentWillUnmount() {
-  }
-
-  onLoginPress() {
-
-  }
-
-  async onFbLoginPress() {
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(appId, {
-      permissions: ['public_profile', 'email'],
-    });
-    if (type === 'success') {
-      const response = await fetch(
-        `https://graph.facebook.com/me?access_token=${token}`);
-      Alert.alert(
-        'Logged in!',
-        `Hi ${(await response.json()).name}!`,
-      );
-    }
   }
 }
