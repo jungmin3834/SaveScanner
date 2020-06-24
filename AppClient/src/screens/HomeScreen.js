@@ -1,29 +1,22 @@
 import * as React from 'react';
-import {  StyleSheet, View, Text,AsyncStorage,TouchableOpacity} from 'react-native';
-
+import {  StyleSheet, View,AsyncStorage ,Text,TouchableOpacity} from 'react-native';
 import { QRCode } from 'react-native-custom-qr-codes-expo';
 
-
-/*
-const instructions = Platform.select({
-  ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
-  android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
-});*/
 
 class Home extends React.Component {
   constructor(){
     super();
-    this.state = { data: "" };
+    this.state = { data: "Load" };
     this.getSaveQRCode();
   }
 
-  getSaveQRCode = async () => {
+   getSaveQRCode = async () => {
+     const update = this.updateData;
     try {
-      const value = await AsyncStorage.getItem('qrData');
-      if (value !== null) {
-        this.setState({data: value});
-      }
+      const data = await (await AsyncStorage.getItem('qrData')).toString();
+      update(data);
     } catch (error) {
+      update("");
     }
   };
   
@@ -44,6 +37,14 @@ class Home extends React.Component {
         <Text style={styles.welcome}>Save Scanner</Text>
         <Text style={styles.instructions}>Share QR Code for us!</Text>
         { 
+        this.state.data ==="Load" ? ( 
+        <TouchableOpacity style={styles.qrBox}> 
+        <View style={{marginTop:'auto',marginBottom:'auto'}}>
+              <Text style={styles.qrText}>
+                  Load QR Code~
+              </Text>
+        </View> 
+        </TouchableOpacity >) :
         this.state.data != "" ? 
         <TouchableOpacity onPress={() =>{ this.moveToRegisterScreen(); }}> 
           <QRCode content={this.state.data} />
