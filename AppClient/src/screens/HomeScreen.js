@@ -14,6 +14,7 @@ class Home extends React.Component {
   constructor(){
     super();
     this.state = { data: "" };
+    this.getSaveQRCode();
   }
 
   getSaveQRCode = async () => {

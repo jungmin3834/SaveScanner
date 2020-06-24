@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import styles from "../assets/style/style";
-import {Keyboard,Text,Button, View, TextInput, TouchableOpacity,TouchableWithoutFeedback, Alert, KeyboardAvoidingView} from 'react-native';
+import {Keyboard,Text,AsyncStorage, View, TextInput, TouchableOpacity,TouchableWithoutFeedback, Alert, KeyboardAvoidingView} from 'react-native';
 
 const appId = "1047121222092614"
 
@@ -22,6 +22,15 @@ export default class RegisterScreen extends Component {
 
   }
 
+  _storeData = async (data) => {
+    try {
+      AsyncStorage.clear();
+      await AsyncStorage.setItem( 'qrData', data  );
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
   updateData(){
     if(this.state.name === "")
       alert("이름을 입력해주세요");
@@ -32,7 +41,9 @@ export default class RegisterScreen extends Component {
     else{
       let str = '{"name":' + '"' + this.state.name + '"' + ',"email":'+  '"' +this.state.email +  '"' +',"phone":' + '"' + this.state.phone +'"';
       this.state.update(str);
+      this._storeData(str);
       this.props.navigation.goBack();
+
     }
   }
 
