@@ -1,6 +1,4 @@
 import * as React from 'react';
-
-import {AsyncStorage, Alert} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -18,7 +16,6 @@ class FirstScreenClass extends React.Component{
     return (
        <Stack.Navigator  screenOptions={{ headerShown: false}}>
         <Stack.Screen name="StartScreen" component={StartScreen} options={{headerShown: false}}/>
-        
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{headerShown:false}}/>
       </Stack.Navigator>
     );
