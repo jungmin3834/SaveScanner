@@ -40,12 +40,11 @@ const styles = StyleSheet.create({
     margin:"auto",
   },
   body :{
-    width : "90%",
+    width : "100%",
     height : "80%",
     backgroundColor :"grey",
     margin :"auto",
-    marginTop : 20,
-    marginLeft:"5%"
+    marginTop : 50
   },
   contentBody :{
     display :"none"

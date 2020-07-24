@@ -15,7 +15,17 @@ import { RNCamera } from 'react-native-camera';
 
 export default class ScanScreen extends Component {
   onSuccess = e => {
-    alert("success");
+    try{
+      let jsonData =  JSON.parse(e.data+"}");
+      if(jsonData != null){
+        alert(jsonData.name);
+      }
+    }
+    catch(er){
+
+      alert(er + "  " + e.data);
+    }
+
   };
 
   render() {
@@ -32,8 +42,10 @@ export default class ScanScreen extends Component {
         </Text>
       }
       bottomContent={
-        <TouchableOpacity style={styles.buttonTouchable}>
-          <Text style={styles.buttonText}>OK. Got it!</Text>
+        <TouchableOpacity onPress={()=>{alert("dd")}} style={styles.buttonTouchable}>
+          <View>
+            <Text style={styles.buttonText}>OK. Got it!</Text>
+          </View>
         </TouchableOpacity>
       }
     />
@@ -58,9 +70,12 @@ const styles = StyleSheet.create({
     color: 'rgb(0,122,255)'
   },
   buttonTouchable: {
-    padding: 16
+    backgroundColor : 'ivory',
+    height : 30
+    
   },
   scannerBody : {
     marginTop:"10%",
+    
   },
 });
