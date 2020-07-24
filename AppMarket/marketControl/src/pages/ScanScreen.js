@@ -23,7 +23,7 @@ export default class ScanScreen extends Component {
       <QRCodeScanner
       style={styles.scannerBody}
       onRead={this.onSuccess}
-     // flashMode={RNCamera.Constants.FlashMode.torch}
+      flashMode={RNCamera.Constants.FlashMode.torch}
       topContent={
         <Text style={styles.centerText}>
           Go to{' '}
@@ -61,6 +61,6 @@ const styles = StyleSheet.create({
     padding: 16
   },
   scannerBody : {
-    marginTop:"100px",
+    marginTop:"10%",
   },
 });
