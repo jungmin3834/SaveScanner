@@ -7,23 +7,38 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  Linking
+  Linking,
+  AsyncStorage
 } from 'react-native';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 
 export default class ScanScreen extends Component {
+  setDataToLocalDB = (data) =>{
+    let date = new Date();
+    const dateKey = date.getUTCFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getUTCDate();
+    AsyncStorage.getItem(dateKey).then(storageData => {
+      if(storageData == null){
+        storageData = "["+data + "]";
+      }else{
+        storageData = storageData.slice(0, -1) + "," + data + "]";
+      }
+      AsyncStorage.setItem(dateKey, storageData)
+      .catch(e =>{alert("저장 에러 : " + e)})
+      .then(()=>{alert("저장 성공")});
+    })
+  }
+
   onSuccess = e => {
     try{
-      let jsonData =  JSON.parse(e.data+"}");
+      let jsonData =  e.data+',"time":'+'"'+new Date().toTimeString() + '"}';
       if(jsonData != null){
-        alert(jsonData.name);
+        //this.setDataToLocalDB(jsonData);
       }
     }
     catch(er){
-
-      alert(er + "  " + e.data);
+      alert("Save Fail! " + er);
     }
 
   };
@@ -34,20 +49,6 @@ export default class ScanScreen extends Component {
       style={styles.scannerBody}
       onRead={this.onSuccess}
       flashMode={RNCamera.Constants.FlashMode.torch}
-      topContent={
-        <Text style={styles.centerText}>
-          Go to{' '}
-          <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
-          your computer and scan the QR code.
-        </Text>
-      }
-      bottomContent={
-        <TouchableOpacity onPress={()=>{alert("dd")}} style={styles.buttonTouchable}>
-          <View>
-            <Text style={styles.buttonText}>OK. Got it!</Text>
-          </View>
-        </TouchableOpacity>
-      }
     />
     );
   }
@@ -70,12 +71,12 @@ const styles = StyleSheet.create({
     color: 'rgb(0,122,255)'
   },
   buttonTouchable: {
-    backgroundColor : 'ivory',
     height : 30
     
   },
   scannerBody : {
     marginTop:"10%",
+    backgroundColor:"black"
     
   },
 });
