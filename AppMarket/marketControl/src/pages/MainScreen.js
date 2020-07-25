@@ -12,6 +12,20 @@ import {
 } from 'react-native';
 
 import ScanScreen from './ScanScreen';
+import QrDataScreen from './QrDataScreen';
+
+/*
+ <View style={styles.content}>
+        <View style={styles.body}>
+                  <ScanScreen></ScanScreen>
+        </View>
+        <View style={styles.bottomView}>
+            <Text style={{color:"#efefef", fontSize:25}}>
+                  저장 공간
+            </Text>
+        </View>
+        </View>
+*/
 
 export default class MainScreen extends Component {
 /*
@@ -23,16 +37,8 @@ export default class MainScreen extends Component {
 
   render() {
     return (
-        <View style={styles.content}>
-        <View style={styles.body}>
-                  <ScanScreen></ScanScreen>
-        </View>
-        <View style={styles.bottomView}>
-            <Text style={{color:"#efefef", fontSize:25}}>
-                  저장 공간
-            </Text>
-        </View>
-        </View>
+      <QrDataScreen></QrDataScreen>
+       
     );
   }
 }
