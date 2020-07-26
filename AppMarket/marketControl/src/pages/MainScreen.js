@@ -26,7 +26,6 @@ export default class MainScreen extends Component {
     this.setState({scannerPage:!this.state.scannerPage})
   }
 
-
   render() {
     return (
     <View style={styles.content}>

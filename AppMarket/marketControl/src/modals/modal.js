@@ -2,42 +2,38 @@ import React, {useState} from 'react';
 import {Button, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
 
-function ModalTester() {
-  const [isModalVisible, setModalVisible] = useState(false);
-  
+function ModalTester(props) {
+
   const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+    props.openModal(false,null);
   };
 
-    return (
-      <View style={{flex: 1}}>
-        <Button title="Show modal" onPress={toggleModal} />
+  const clickModalBtn = () =>{
+    alert("click EVent")
+  }
 
-        <Modal isVisible={isModalVisible}>
+  const currentData = props.currentData == null ? "" : props.currentData;
+    return (
+        <Modal isVisible={props.isModal}>
           <View style={styles.container}>
               <View style={styles.body}>
                 <View style={styles.items}>
                     <View style={styles.row}>
                         <Text style={styles.itemTitle}>
-                            출입 시간
+                            {currentData.name} : {currentData.date}
                         </Text>
                     </View>
                     <View style={styles.row}>
-                        <Text style={styles.itemTitle}>
-                                NAME
-                        </Text>
-                    </View>
-                    <View style={styles.row}>
-                        <TouchableOpacity style={styles.item} title="Hide modal" onPress={toggleModal} >
+                        <TouchableOpacity style={styles.item} title="Hide modal" onPress={clickModalBtn} >
                             <Text style={styles.itemTitle}>
-                                전화걸기
+                                전화걸기 {currentData.phone}
                             </Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.row}>
-                        <TouchableOpacity style={styles.item} title="Hide modal" onPress={toggleModal} >
+                        <TouchableOpacity style={styles.item} title="Hide modal" onPress={clickModalBtn} >
                             <Text style={styles.itemTitle}>
-                                이메일 작성
+                                이메일 작성 {currentData.email}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -45,14 +41,13 @@ function ModalTester() {
                 <View style={styles.modalButton}>
                     <TouchableOpacity style={styles.closeModal} title="Hide modal" onPress={toggleModal} >
                         <Text style={styles.closeBtn}>
-                            Close
+                            CLOSE
                         </Text>
                      </TouchableOpacity>
                 </View>
               </View>
           </View>
         </Modal>
-      </View>
     );
 }
 
