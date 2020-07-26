@@ -34,8 +34,8 @@ export default class MainScreen extends Component {
         { this.state.scannerPage == false ? (  <QrDataScreen></QrDataScreen>):( <ScanScreen></ScanScreen>) }
       </View>
       <View style={styles.bottomView}>
-        <TouchableOpacity onPress={this.changePage}>
-          <Text style={{color:"#efefef", fontSize:25}}>
+        <TouchableOpacity onPress={this.changePage} style={styles.bottomButton}>
+          <Text style={{color:"grey", fontSize:25 , textAlign:"center"}}>
                 {this.state.scannerPage == true ? "저장 공간" : "스케너"}
           </Text>
         </TouchableOpacity>
@@ -55,6 +55,12 @@ const styles = StyleSheet.create({
     height :"100%",
     backgroundColor :"black",
     margin :"auto"
+  },
+  bottomButton :{
+    backgroundColor:"#efefef",
+    width:"50%",
+    height :"50%",
+    padding : "4%"
   },
   bottomView: {
     width: '100%',

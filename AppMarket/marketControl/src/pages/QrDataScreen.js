@@ -5,21 +5,28 @@ import {
   View,
   Button,
   SafeAreaView,
-   ScrollView,
-   FlatList,
-   AsyncStorage
+  ScrollView,
+  FlatList,
+  AsyncStorage,
+  TouchableOpacity
 } from 'react-native';
 
 import CalendarPicker from 'react-native-calendar-picker';
  
 
+const _onLongPressButton = (item) =>{
+  alert(item.name);
+}
 
-const Item = ({ title }) => (
+
+const Item = ({ item }) => (
   <View style={styles.item}>
-    <Text style={styles.date}>date : {title.date}</Text>
-    <Text style={styles.itemData}>phone : {title.phone}</Text>
-    <Text style={styles.itemData}>email : {title.email}</Text>
-    <Text style={styles.itemData}>name : {title.name}</Text>
+    <TouchableOpacity onLongPress={()=>{_onLongPressButton(item)}}>
+      <Text style={styles.date}>date : {item.date}</Text>
+      <Text style={styles.itemData}>phone : {item.phone}</Text>
+      <Text style={styles.itemData}>email : {item.email}</Text>
+      <Text style={styles.itemData}>name : {item.name}</Text>
+    </TouchableOpacity>
   </View>
 );
 
@@ -34,6 +41,8 @@ export default class App extends Component {
     this.onDateChange = this.onDateChange.bind(this);
     this.renderItem = this.renderItem.bind(this);
   }
+
+
  
   renderItem = ({ item }) => (
     <Item title={item} />
@@ -77,7 +86,6 @@ export default class App extends Component {
           selectedStartDate={startDate}
           onDateChange={this.onDateChange}
         />
- 
         <View>
           <Text>     SELECTED DATE : { startDate }</Text>
         </View>
