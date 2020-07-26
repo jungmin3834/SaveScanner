@@ -1,18 +1,43 @@
 import React, {useState} from 'react';
-import {Button, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Button, Text, View, StyleSheet, Linking, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
+import qs from 'qs';
 
 function ModalTester(props) {
-
+  const currentData = props.currentData == null ? "" : props.currentData;
   const toggleModal = () => {
     props.openModal(false,null);
   };
 
-  const clickModalBtn = () =>{
-    alert("click EVent")
+  const clickCallEvent= () =>{
+    Linking.openURL(`tel:${currentData.phone}`)
   }
 
-  const currentData = props.currentData == null ? "" : props.currentData;
+  const clickSendEmailEvent = () =>{
+    const { cc, bcc } = "";
+    let url = `mailto:${currentData.email}`;
+
+    // Create email link query
+    const query = qs.stringify({
+        subject: 'subject',
+        body: 'body',
+        cc: cc,
+        bcc: bcc
+    });
+
+    if (query.length)
+        url += `?${query}`;
+
+    // check if we can use this link
+    Linking.canOpenURL(url).then(i => {
+      if(i == true){
+        Linking.openURL(url);
+        url = null;
+      }
+    });
+  }
+
+ 
     return (
         <Modal isVisible={props.isModal}>
           <View style={styles.container}>
@@ -24,16 +49,16 @@ function ModalTester(props) {
                         </Text>
                     </View>
                     <View style={styles.row}>
-                        <TouchableOpacity style={styles.item} title="Hide modal" onPress={clickModalBtn} >
+                        <TouchableOpacity style={styles.item} title="Hide modal" onPress={clickCallEvent} >
                             <Text style={styles.itemTitle}>
-                                전화걸기 {currentData.phone}
+                                전화걸기 : {currentData.phone}
                             </Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.row}>
-                        <TouchableOpacity style={styles.item} title="Hide modal" onPress={clickModalBtn} >
+                        <TouchableOpacity style={styles.item} title="Hide modal" onPress={clickSendEmailEvent} >
                             <Text style={styles.itemTitle}>
-                                이메일 작성 {currentData.email}
+                                이메일 작성 : {currentData.email}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -69,7 +94,7 @@ const styles = StyleSheet.create({
       alignItems: 'center'
     },
     itemTitle:{
-        fontSize : 20,
+        fontSize : 18,
         textAlign:"center",
         backgroundColor:"#efefef"
     },
