@@ -1,5 +1,5 @@
 # SaveScanner
-우송대학교 내 경진대회용 
+
 
 ## 프로젝트 주제 
    * 코로나 인증용 클라이언트용 QR코드 생성기  
@@ -33,9 +33,15 @@
      
 ## 실행 방법 
 
+- Client 용   
   1. 깃 허브 프로젝트 클론
   2. AppClient 폴더에서 명령어창 오픈 후 npm install , 이후 npm start 혹은 expo start로 시작
   3. 핸드폰 expo 어플리케이션 이용 혹은 시뮬레이터를 통해서 테스트  
+
+- Market 용  
+  1. 깃 허브 프로젝트 클론  
+  2. AppMarket 폴더에서 명령어창 오픈 후 npm install , 이후 react-native run-android 실행  
+  3. 핸드폰 expo 어플리케이션 이용 혹은 시뮬레이터를 통해서 테스트    
 
 
 ## 화면 이미지   
